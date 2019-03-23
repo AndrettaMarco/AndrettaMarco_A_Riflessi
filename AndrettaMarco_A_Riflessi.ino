@@ -8,50 +8,64 @@ int numrandom;
 int numrandom2;
 int tempo1;
 int tempo2=0;
-int schiacciato=0;
+int Click=0;
+int varMillis;
 LiquidCrystal lcd(2, 3, 4, 5, 6, 7);
 
 void setup() {
   // put your setup code here, to run once:
 pinMode (pulsante, INPUT);
 pinMode (led, OUTPUT);
+pinMode (buzzer, OUTPUT);
 lcd.begin(16, 2);
 lcd.setCursor(0, 0);
-lcd.print("Prima riga");
-//lcd.setCursor(0, 1);
-//lcd.print("seconda riga");
+lcd.print("Pronto???");
 randomSeed(analogRead(0));
 RiflessiLed();
 RiflessiSuono();
 
 }
 
-
+// Riflessi Visivi
 void RiflessiLed()
 {
+
 numrandom= random(2000, 8000);
 delay(numrandom);
 digitalWrite(led, HIGH);
+tempo1=millis();
 while(digitalRead(pulsante)==LOW);
 digitalWrite(led, LOW);
+lcd.clear();
+tempo2=millis();
+varMillis = tempo2 - tempo1;
+lcd.print(varMillis);
+lcd.print(" ms");
+
 }
 
+//Riflessi Sonori
 void RiflessiSuono()
 {
 numrandom2 = random (2000, 8000);
 delay(numrandom2);
 digitalWrite(buzzer, HIGH);
-tone (7, 400, 6000); //7 è la porta buzzer; suona alla frequenza di 400Hz per 6 secondi
+tone (buzzer, 1000, 000); //7 è la porta buzzer; suona alla frequenza di 400Hz per  secondi
 tempo1=millis();
-while(schiacciato==0){
-schiacciato=digitalRead(pulsante);
-if(schiacciato==HIGH){
-tempo2=millis();
-noTone(buzzer);
+while(Click==0){
+Click=digitalRead(pulsante);
+if(Click==HIGH){
+  noTone(buzzer);
 }
+lcd.setCursor(0,1);
+tempo2=millis();
+
+varMillis = tempo2 - tempo1;
+lcd.print(varMillis);
+lcd.print(" ms");
 }
 
-schiacciato=0;
+Click=0;
 }
 
 void loop() {
