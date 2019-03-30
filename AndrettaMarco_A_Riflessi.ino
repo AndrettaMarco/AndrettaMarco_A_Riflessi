@@ -50,7 +50,7 @@ void RiflessiSuono()
 numrandom2 = random (2000, 8000);
 delay(numrandom2);
 digitalWrite(buzzer, HIGH);
-tone (buzzer, 1000, 000); //7 è la porta buzzer; suona alla frequenza di 400Hz per  secondi
+tone (buzzer, 1000, 000); //Suona alla frequenza di 1000Hz per  secondi
 tempo1=millis();
 while(Click==0){
 Click=digitalRead(pulsante);
@@ -66,8 +66,16 @@ lcd.print(" ms");
 }
 
 Click=0;
-}
 
+delay(2000);
+ lcd.clear();
+if(varMillis<500)
+{ 
+lcd.print("Sei Passato");}
+else{
+  lcd.print("Non sei passato");
+  }
+}
 void loop() {
   // put your main code here, to run repeatedly:
 }
